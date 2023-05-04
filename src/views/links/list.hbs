@@ -1,0 +1,82 @@
+
+<style> h3 { color: green; } </style>
+
+<div class="container p-4">
+  <div class="row mb-3">
+    <div class="col-md-8">
+      <div class="form-group">
+        <input type="text" id="search" class="form-control" placeholder="Buscar por dirección">
+      </div>
+    </div>
+    <div class="col-md-1">
+      <button id="searchBtn" class="btn btn-primary w-150">Buscar</button>
+    </div>
+    <div class="col-md-1">
+      <button id="resetBtn" class="btn btn-secondary w-150">Limpiar</button>
+    </div>
+  </div>
+ 
+
+
+  <div class="row">
+
+    {{#each links}}
+    <div class="col-md-3">
+
+      <div class="card text-center">
+        <div class="card-body">
+          <h2 class="card-title text-uppercase">{{titulo}}</h2>
+          <h6 id="hola" class="card-subtitle">{{direccion}}</h6>
+          <br>
+          <p class="card-text">{{descripcion}}</p>
+          <h3 class="card-text">${{precio}}</h3>
+          <p class="card-text">Publicado hace {{timeago fecha_publicacion}}</p>
+
+                    <a class="btn btn-danger" href="/links/delete/{{id_publicacion}}">
+                      Eliminar
+                    </a>
+                    <a class="btn btn-secondary" href="/links/edit/{{id_publicacion}}">
+                      Editar
+                    </a>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  <br>
+            <a href="/links/add" class="btn btn-info btn-lg w-40" role="button">Agregar</a>
+
+</div>
+
+
+
+
+
+<script>
+  const searchBtn = document.querySelector('#searchBtn');
+  const resetBtn = document.querySelector('#resetBtn');
+  const searchInput = document.querySelector('#search');
+  const links = document.querySelectorAll('.card');
+
+  searchBtn.addEventListener('click', () => {
+    const searchTerm = searchInput.value.toLowerCase();
+
+    links.forEach(link => {
+      const direccion = link.querySelector('.card-subtitle').textContent.toLowerCase();
+
+      if (direccion.includes(searchTerm)) {
+        link.style.display = 'block';
+      } else {
+        link.style.display = 'none';
+      }
+    });
+  });
+
+  resetBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    links.forEach(link => {
+      link.style.display = 'block';
+    });
+  });
+</script>
+
