@@ -28,11 +28,22 @@ router.post('/add', isLoggedIn, async (req, res) => {
 });
 //MOSTRAR
 
+
+
 router.get('/', isLoggedIn, async (req, res) => {
-	const links = await pool.query('SELECT * FROM publicaciones WHERE id_usuario =?', [req.user.id]);
-	console.log(links);
-	res.render('links/list',{ links });
+  const links = await pool.query(`
+    SELECT p.*, u.username
+    FROM publicaciones p
+    JOIN usuarios u ON p.id_usuario = u.id
+    WHERE p.id_usuario NOT IN (?)
+  `, [req.user.id]);
+  console.log(links);
+  res.render('links/list', { links });
 });
+
+
+
+
 
 //ELIMINAR
 router.get('/delete/:id_publicacion', isLoggedIn, async (req, res) => {

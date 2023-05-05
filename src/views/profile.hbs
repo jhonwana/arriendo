@@ -1,16 +1,50 @@
 <div class="container p-4">
     <div class="row">
-        <div class="col-md-4 mx-auto">
-            <div class="card text-center">
+        <div class="col-md-8 mx-auto">
+            <div class="text-center">
                 <div class="card-body">
-                    <h3>Welcome </h3>
-                    <h4>{{user.username}}</h4>
-                    <a href="/links" class="btn btn-primary m-4">
+                  <h3>Bienvenido {{user.username}}</h3>
+                  
+                    <a href="/links/add" class="btn btn-primary m-2">
                         Crea tu publicacion    
                     </a>
+
+                     <a href="/links" class="btn btn-primary m-2">
+                        Ver publicaciones   
+                    </a>
+
                 </div>
-            </div>
+            </div/add>
         </div>
 
     </div>
 </div>
+
+<div class="text-center">
+<h1>Tus publicaciones</h1>
+<hr>
+</div>
+
+<div class="row justify-content-center">
+  {{#each links}}
+  <div class="col-md-3">
+    <div class="card text-center">
+      <div class="card-body">
+        <h2 class="card-title text-uppercase">{{titulo}}</h2>
+        <h6 id="hola" class="card-subtitle">{{direccion}}</h6>
+        <br>
+        <p class="card-text">{{descripcion}}</p>
+        <h3 class="card-text">${{precio}}</h3>
+        <p class="card-text">Publicado hace {{timeago fecha_publicacion}}</p>
+        <a class="btn btn-secondary" href="/links/edit/{{id_publicacion}}">Editar</a>
+        <a class="btn btn-danger" href="/links/delete/{{id_publicacion}}">Eliminar</a>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+<br>
+<a href="/links/add" class="btn btn-info btn-lg w-40" role="button">Agregar</a>
+
+</div>
+

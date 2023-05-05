@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "ini": "run src/index.js",
     "dev": "nodemon src/index.js"
   },
   "keywords": [],

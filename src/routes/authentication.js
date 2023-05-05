@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const pool = require ('../database');
+
 
 const { isLoggedIn, isNotLoggedIn } = require('../lib/auth')
 // REGISTRO
@@ -35,8 +37,10 @@ router.post('/signin', (req, res, next) => {
 
 
 
-router.get('/profile', isLoggedIn, (req, res) => {
-  res.render('profile');
+router.get('/profile', isLoggedIn, async (req, res) => {
+ 	const links = await pool.query('SELECT * FROM publicaciones WHERE id_usuario =?', [req.user.id]);
+	console.log(links);
+	res.render('profile',{ links });
 });
 
  

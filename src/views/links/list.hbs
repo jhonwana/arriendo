@@ -16,32 +16,26 @@
     </div>
   </div>
  
-
-
-  <div class="row">
-
+  
+  
+<div class="row">
     {{#each links}}
-    <div class="col-md-3">
-
-      <div class="card text-center">
-        <div class="card-body">
-          <h2 class="card-title text-uppercase">{{titulo}}</h2>
-          <h6 id="hola" class="card-subtitle">{{direccion}}</h6>
-          <br>
-          <p class="card-text">{{descripcion}}</p>
-          <h3 class="card-text">${{precio}}</h3>
-          <p class="card-text">Publicado hace {{timeago fecha_publicacion}}</p>
-
-                    <a class="btn btn-danger" href="/links/delete/{{id_publicacion}}">
-                      Eliminar
-                    </a>
-                    <a class="btn btn-secondary" href="/links/edit/{{id_publicacion}}">
-                      Editar
-                    </a>
+      <div class="col-md-3">
+        <div class="card text-center">
+          <div class="card-body">
+            <h2 class="card-title text-uppercase">{{titulo}}</h2>
+            <h6 id="hola" class="card-subtitle">{{direccion}}</h6>
+            <br>
+            <p class="card-text">{{descripcion}}</p>
+            <h3 class="card-text">${{precio}}</h3>
+            <p class="card-text">Publicado hace {{timeago fecha_publicacion}}</p>
+            <p class="card-text">Publicado por {{username}}</p>
+          </div>
         </div>
       </div>
-    </div>
     {{/each}}
+</div>
+
   </div>
   <br>
             <a href="/links/add" class="btn btn-info btn-lg w-40" role="button">Agregar</a>
