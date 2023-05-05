@@ -2,15 +2,20 @@ const express = require('express');
 const morgan = require('morgan');
 const { engine } = require ('express-handlebars');
 const path = require('path');
+const session = require('express-session');
+const flash = require('connect-flash');
+const MySQLStore = require('express-mysql-session')(session);
+const passport = require('passport');
+
+const { database } = require('./keys');
 
 // inicio
-const app = express();
 
+const app = express();
+require('./lib/passport');
 // config
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-app.set('host', '192.168.1.97');
 app.set('port', process.env.PORT || 8000);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', engine({
@@ -22,14 +27,27 @@ app.engine('.hbs', engine({
 }))
 app.set('view engine', '.hbs');
 
-// Widlebars
+// Middlewares
+
+app.use(session({
+  secret: 'messageflash',
+  resave: false,
+  saveUninitialized: false,
+  store: new MySQLStore(database)
+}));
+app.use(flash());
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(passport.initialize());
+app.use(passport.session());
+
 //Variables globales
 
 app.use((req, res, next) => {
-
+  app.locals.message = req.flash('message');
+  app.locals.success = req.flash('success');
+  app.locals.user = req.user;
 	next();
 });
 

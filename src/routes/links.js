@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const pool = require ('../database');
-
+const { isLoggedIn } = require ('../lib/auth')
 
 //AGREGAR
 
-router.get('/add', (req, res) => {
+router.get('/add', isLoggedIn, (req, res) => {
 	res.render('links/add');
 });
 
-router.post('/add', async (req, res) => {
+router.post('/add', isLoggedIn, async (req, res) => {
 	
 	const { titulo, descripcion, direccion, ciudad, estado, precio,  } = req.body;
 	const newlink = {
@@ -20,30 +20,33 @@ router.post('/add', async (req, res) => {
     ciudad,
     estado,
     precio,
+    id_usuario: req.user.id 
 	};
 	await pool.query('INSERT INTO publicaciones set?', [newlink]);
-	res.redirect('/links');
+	req.flash('success', 'Se ha guardado correctamente');
+  res.redirect('/links');
 });
-
 //MOSTRAR
 
-router.get('/', async (req, res) => {
-	const links = await pool.query('SELECT * FROM publicaciones');
+router.get('/', isLoggedIn, async (req, res) => {
+	const links = await pool.query('SELECT * FROM publicaciones WHERE id_usuario =?', [req.user.id]);
 	console.log(links);
 	res.render('links/list',{ links });
 });
 
 //ELIMINAR
-router.get('/delete/:id_publicacion', async (req, res) => {
+router.get('/delete/:id_publicacion', isLoggedIn, async (req, res) => {
     const { id_publicacion } = req.params;
     await pool.query('DELETE FROM publicaciones WHERE id_publicacion = ?', [id_publicacion]);
+    req.flash('success', 'Se ha eliminado correctamente');
     res.redirect('/links');
 });
 
 //EDITAR 
-router.get('/edit/:id_publicacion', async (req, res) => {
+router.get('/edit/:id_publicacion', isLoggedIn, async (req, res) => {
   const { id_publicacion } = req.params;
   const links = await pool.query('SELECT * FROM publicaciones WHERE id_publicacion = ?', [id_publicacion]);
+  req.flash('success', 'Se ha editado correctamente');
   res.render('links/edit', {link: links[0]});
 });
 

@@ -1,0 +1,80 @@
+{{#if message}}
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{message}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+/* Establecer la duración de la transición y la animación */
+  .alert.fade.show {
+    transition: opacity 0.5s linear;
+    animation: hideAlert 0.5s linear 2s forwards;
+  }
+
+  /* Definir la animación para ocultar la alerta */
+  @keyframes hideAlert {
+    to { opacity: 0; }
+  }
+  
+  /* Ocultar la alerta una vez que se desvanece */
+  .alert.d-none {
+    display: none;
+  }
+</style>
+
+<script>
+  // Esperar 2 segundos y ocultar la alerta
+  setTimeout(function() {
+    var alert = document.querySelector('.alert');
+    alert.classList.add('d-none');
+  }, 3500);
+</script>
+
+
+{{/if}}
+
+
+
+
+{{#if success}}
+<div class="container p-4">
+  <div class="row">
+    <div class="col-md-4 mx-auto">
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{success}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Establecer la duración de la transición y la animación */
+  .alert.fade.show {
+    transition: opacity 0.5s linear;
+    animation: hideAlert 0.5s linear 2s forwards;
+  }
+
+  /* Definir la animación para ocultar la alerta */
+  @keyframes hideAlert {
+    to { opacity: 0; }
+  }
+  
+  /* Ocultar la alerta una vez que se desvanece */
+  .alert.d-none {
+    display: none;
+  }
+</style>
+
+<script>
+  // Esperar 2 segundos y ocultar la alerta
+  setTimeout(function() {
+    var alert = document.querySelector('.alert');
+    alert.classList.add('d-none');
+  }, 3500);
+</script>
+{{/if}}
