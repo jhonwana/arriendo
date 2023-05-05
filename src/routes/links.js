@@ -32,10 +32,10 @@ router.post('/add', isLoggedIn, async (req, res) => {
 
 router.get('/', isLoggedIn, async (req, res) => {
   const links = await pool.query(`
-    SELECT p.*, u.username
-    FROM publicaciones p
-    JOIN usuarios u ON p.id_usuario = u.id
-    WHERE p.id_usuario NOT IN (?)
+    SELECT publicaciones.*, usuarios.username
+    FROM publicaciones
+    JOIN usuarios ON publicaciones.id_usuario = usuarios.id
+    WHERE publicaciones.id_usuario NOT IN (?)
   `, [req.user.id]);
   console.log(links);
   res.render('links/list', { links });

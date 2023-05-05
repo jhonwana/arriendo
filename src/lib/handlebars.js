@@ -1,9 +1,27 @@
+
 const { format } = require('timeago.js');
-
-const helpers = {};
-
-helpers.timeago = (timestamp) => {
-  return format(timestamp);
+const localeFunc = (number, index, total_sec) => {
+  // traducción al español de las palabras clave utilizadas por timeago.js
+  return [    ['justo ahora', 'ahora mismo'],
+    ['hace %s segundos', 'en %s segundos'],
+    ['hace 1 minuto', 'en 1 minuto'],
+    ['hace %s minutos', 'en %s minutos'],
+    ['hace 1 hora', 'en 1 hora'],
+    ['hace %s horas', 'en %s horas'],
+    ['hace 1 día', 'en 1 día'],
+    ['hace %s días', 'en %s días'],
+    ['hace 1 semana', 'en 1 semana'],
+    ['hace %s semanas', 'en %s semanas'],
+    ['hace 1 mes', 'en 1 mes'],
+    ['hace %s meses', 'en %s meses'],
+    ['hace 1 año', 'en 1 año'],
+    ['hace %s años', 'en %s años']
+  ][index];
 };
-
+require('timeago.js').register('es_ES', localeFunc);
+const helpers = {};
+helpers.timeago = (timestamp) => {
+  return format(timestamp, 'es_ES');
+};
 module.exports = helpers;
+
